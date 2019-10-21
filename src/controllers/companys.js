@@ -28,10 +28,11 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
-    }, 
+    },
     updateCompany: function(req,res){
         const companyID = req.params.companyID
         const data = req.body
+        console.log(companyID)
         companyModels.updateCompany(data,companyID)
         .then(result => {
             res.json(result)

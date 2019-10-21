@@ -39,9 +39,20 @@ module.exports = {
           })
     }, 
     updateJob: function(req,res){
-        const jobID = req.params.jobID
-        const data = req.body
-        jobModels.updateJob(data,jobID)
+      const JobID = req.params.JobID
+      console.log(JobID)
+      const data = req.body
+      jobModels.updateJob(data,JobID)
+      .then(result => {
+          res.json(result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+      deleteJob: function(req,res){
+        const JobID = req.params.JobID
+        jobModels.deleteJob(JobID)
         .then(result => {
             res.json(result)
           })
@@ -49,9 +60,9 @@ module.exports = {
             console.log(err)
           })
       },
-      deleteJob: function(req,res){
-        const jobID = req.params.jobID
-        jobModels.deleteJob(jobID)
+      searchJobbyName: function(req,res){
+        const {jobName} = req.query
+        jobModels.searchJobbyName(jobName)
         .then(result => {
             res.json(result)
           })

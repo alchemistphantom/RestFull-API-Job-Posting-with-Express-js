@@ -44,5 +44,16 @@ module.exports={
                   }
             })
         })
+    },
+    searchJobbyName: function(jobName){
+        return new Promise(function(resolve,reject){
+            conn.query(`SELECT * FROM view_data WHERE name LIKE '%${jobName}'%`,function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
     }
 }

@@ -9,5 +9,6 @@ Route
 .delete('/:JobID',jobControllers.deleteJob)
 .get('/search',jobControllers.byName)
 .get('/search',jobControllers.byCompany)
+.get('/sortBy/:sortBy/:mode',jobControllers.sortBy)
 
 module.exports = Route

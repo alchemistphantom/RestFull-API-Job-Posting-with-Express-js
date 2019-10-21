@@ -77,5 +77,16 @@ module.exports = {
         .catch(err => {
           console.log(err)
         })
+      },
+      sortBy: function(req,res){
+        const sortBy = req.params.sortBy
+        const mode = req.params.mode
+        jobModels.sortBy(sortBy,mode)
+        .then(result => {
+          res.json(result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
 }

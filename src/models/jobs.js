@@ -33,5 +33,16 @@ module.exports={
                   }
             })
         })
+    },
+    deleteJob: function(jobID){
+        return new Promise(function(resolve,reject){
+            conn.query('DELETE FROM tb_job WHERE id = ?',[jobID],function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
     }
 }

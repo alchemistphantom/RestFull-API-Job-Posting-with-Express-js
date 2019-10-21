@@ -48,5 +48,15 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
+      },
+      deleteJob: function(req,res){
+        const jobID = req.params.jobID
+        jobModels.deleteJob(jobID)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
 }

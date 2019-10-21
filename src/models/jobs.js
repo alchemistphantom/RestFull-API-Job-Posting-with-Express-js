@@ -48,7 +48,7 @@ module.exports={
      byName: function(name){
         return new Promise(function(resolve,reject){
             conn.query('SELECT * FROM view_data WHERE name LIKE ?','%' + name + '%',function(err,result){
-                if (!err) {
+                  if (!err) {
                     resolve(result)
                   } else {
                     reject(new Error(err))
@@ -67,7 +67,4 @@ module.exports={
             })
         })
     }
-
-    
-
 }

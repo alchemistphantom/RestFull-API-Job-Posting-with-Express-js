@@ -37,7 +37,7 @@ module.exports = {
     updateJob: function(req,res){
       const JobID = req.params.JobID
       const date_updated = new Date()
-      req.body.date_updated = date_updated.toLocaleString
+      req.body.date_updated = date_updated
       console.log(JobID)
       const data = req.body
       jobModels.updateJob(data,JobID)

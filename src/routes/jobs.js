@@ -5,6 +5,6 @@ const jobControllers = require('../controllers/jobs')
 
 Route
 .get('/',jobControllers.getJob)
-
+.post('/',jobControllers.addJob)
 
 module.exports = Route

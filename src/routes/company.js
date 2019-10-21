@@ -3,5 +3,8 @@ const Route = express.Router()
 
 const companyControllers = require('../controllers/companys')
 
-Route.use('/',companyControllers.getCompany)
+Route
+.get('/',companyControllers.getCompany)
+.post('/',companyControllers.addCompany)
+
 module.exports = Route

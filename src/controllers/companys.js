@@ -10,5 +10,24 @@ module.exports = {
         .catch(err=>{
             console.log(err)
         })
-    } 
+    },
+    addCompany: function(req,res){
+        const id = uuid()
+        const {name,logo,location,description} = req.body
+        const data = {
+            id,
+            name,
+            logo,
+            location,
+            description
+        }
+        companyModels.addCompany(data)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    }
+   
 }

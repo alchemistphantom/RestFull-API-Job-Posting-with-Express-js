@@ -22,5 +22,16 @@ module.exports={
                   }
             })
         })
+    },
+    updateJob: function(data,jobID){
+        return new Promise(function(resolve,reject){
+            conn.query('UPDATE tb_job SET ? WHERE id = ?',[data,jobID],function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
     }
 }

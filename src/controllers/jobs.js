@@ -37,5 +37,16 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
-    }
+    }, 
+    updateJob: function(req,res){
+        const jobID = req.params.jobID
+        const data = req.body
+        jobModels.updateJob(data,jobID)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
 }

@@ -58,9 +58,10 @@ module.exports = {
             console.log(err)
           })
       },
-       byName: function(req,res){
-        const {name} = req.query
-        jobModels.byName(name)
+      searchJob: function(req,res){
+        const by = req.params.by
+        const search = req.query.search
+        jobModels.searchJob(by,search)
         .then(result => {
             res.json(result)
           })

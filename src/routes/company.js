@@ -6,5 +6,6 @@ const companyControllers = require('../controllers/companys')
 Route
 .get('/',companyControllers.getCompany)
 .post('/',companyControllers.addCompany)
+.patch('/:companyID',companyControllers.updateCompany)
 
 module.exports = Route

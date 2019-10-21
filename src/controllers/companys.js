@@ -28,6 +28,27 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
-    }
+    }, 
+    updateCompany: function(req,res){
+        const companyID = req.params.companyID
+        const data = req.body
+        companyModels.updateCompany(data,companyID)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      deleteCompany: function(req,res){
+        const companyID = req.params.companyID
+        companyModels.deleteCompany(companyID)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
    
 }

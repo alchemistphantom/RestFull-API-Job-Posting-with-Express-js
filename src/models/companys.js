@@ -22,6 +22,29 @@ module.exports={
                   }
             })
         })
+    },
+    updateCompany: function(data,companyID){
+        return new Promise(function(resolve,reject){
+            conn.query('UPDATE tb_company SET ? WHERE id = ?',[data,companyID],function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
+    },
+    deleteCompany: function(companyID){
+        return new Promise(function(resolve,result){
+            conn.query('DELETE FROM tb_company WHERE companyID = ?',companyID,function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
     }
+
 
 }

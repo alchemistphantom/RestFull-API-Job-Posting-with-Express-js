@@ -7,7 +7,6 @@ Route
 .get('/',companyControllers.getCompany)
 .post('/',companyControllers.addCompany)
 .patch('/:companyID',companyControllers.updateCompany)
-.delete('/:companyID',companyControllers.updateCompany)
-
+.delete('/:companyID',companyControllers.deleteCompany)
 
 module.exports = Route

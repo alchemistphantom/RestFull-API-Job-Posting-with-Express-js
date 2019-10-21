@@ -35,8 +35,8 @@ module.exports={
         })
     },
     deleteCompany: function(companyID){
-        return new Promise(function(resolve,result){
-            conn.query('DELETE FROM tb_company WHERE companyID = ?',companyID,function(err,result){
+        return new Promise(function(resolve,reject){
+            conn.query('DELETE FROM tb_company WHERE id = ?',companyID,function(err,result){
                 if (!err) {
                     resolve(result)
                   } else {

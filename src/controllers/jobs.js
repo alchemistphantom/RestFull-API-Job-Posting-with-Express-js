@@ -60,6 +60,16 @@ module.exports = {
             console.log(err)
           })
       },
+      searchJobbyCompany: function(req,res){
+        const {company} = req.query
+        jobModels.searchJobbyCompany(company)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
       searchJobbyName: function(req,res){
         const {name} = req.query
         jobModels.searchJobbyName(name)

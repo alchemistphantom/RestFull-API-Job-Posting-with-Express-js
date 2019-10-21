@@ -7,7 +7,10 @@ Route
 .get('/',jobControllers.getJob)
 .post('/',jobControllers.addJob)
 .patch('/:JobID',jobControllers.updateJob)
-.delete('/:JobID',jobControllers.deleteJob)
 .get('/search',jobControllers.searchJobbyName)
+.delete('/:JobID',jobControllers.deleteJob)
+.get('/search',jobControllers.searchJobbyCompany)
+
+
 
 module.exports = Route

@@ -45,9 +45,9 @@ module.exports={
             })
         })
     },
-    searchJobbyName: function(jobName){
+    searchJobbyName: function(name){
         return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data WHERE name LIKE '%${jobName}'%`,function(err,result){
+            conn.query('SELECT * FROM view_data WHERE name LIKE ?','%' + name + '%',function(err,result){
                 if (!err) {
                     resolve(result)
                   } else {

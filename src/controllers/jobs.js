@@ -61,8 +61,8 @@ module.exports = {
           })
       },
       searchJobbyName: function(req,res){
-        const {jobName} = req.query
-        jobModels.searchJobbyName(jobName)
+        const {name} = req.query
+        jobModels.searchJobbyName(name)
         .then(result => {
             res.json(result)
           })

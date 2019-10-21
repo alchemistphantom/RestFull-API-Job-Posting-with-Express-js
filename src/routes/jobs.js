@@ -8,5 +8,6 @@ Route
 .post('/',jobControllers.addJob)
 .patch('/:JobID',jobControllers.updateJob)
 .delete('/:JobID',jobControllers.deleteJob)
+.get('/search',jobControllers.searchJobbyName)
 
 module.exports = Route

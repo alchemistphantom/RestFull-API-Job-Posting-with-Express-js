@@ -45,18 +45,7 @@ module.exports={
             })
         })
     },
-    searchJobbyCompany: function(company){
-        return new Promise(function(resolve,reject){
-            conn.query('SELECT * FROM view_data WHERE company LIKE ?','%' + name + '%',function(err,result){
-                if (!err) {
-                    resolve(result)
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
-    },
-    searchJobbyName: function(name){
+     byName: function(name){
         return new Promise(function(resolve,reject){
             conn.query('SELECT * FROM view_data WHERE name LIKE ?','%' + name + '%',function(err,result){
                 if (!err) {
@@ -66,7 +55,19 @@ module.exports={
                   }
             })
         })
+    },
+    byCompany: function(company){
+        return new Promise(function(resolve,reject){
+            conn.query('SELECT * FROM view_data WHERE company LIKE ?','%' + company + '%',function(err,result){
+                if (!err) {
+                    resolve(result)
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
     }
+
     
 
 }

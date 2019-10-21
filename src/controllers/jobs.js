@@ -13,11 +13,7 @@ module.exports = {
     },
     addJob: function(req,res){
         const id = uuid()
-        const today = new Date();
-        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        const date_added = date+' '+time;
-        const date_updated = ''
+        const date_updated = new Date().toLocaleString
         const {name,description,id_category,salary,location,id_company} = req.body
         const data = {
             id,
@@ -40,6 +36,8 @@ module.exports = {
     }, 
     updateJob: function(req,res){
       const JobID = req.params.JobID
+      const date_updated = new Date()
+      req.body.date_updated = date_updated.toLocaleString
       console.log(JobID)
       const data = req.body
       jobModels.updateJob(data,JobID)
@@ -60,9 +58,9 @@ module.exports = {
             console.log(err)
           })
       },
-      searchJobbyCompany: function(req,res){
-        const {company} = req.query
-        jobModels.searchJobbyCompany(company)
+       byName: function(req,res){
+        const {name} = req.query
+        jobModels.byName(name)
         .then(result => {
             res.json(result)
           })
@@ -70,14 +68,14 @@ module.exports = {
             console.log(err)
           })
       },
-      searchJobbyName: function(req,res){
-        const {name} = req.query
-        jobModels.searchJobbyName(name)
+      byCompany: function(req,res){
+        const company = req.query.company
+        jobModels.byCompany(company)
         .then(result => {
-            res.json(result)
-          })
-          .catch(err => {
-            console.log(err)
-          })
+          res.json(result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
 }

@@ -1,5 +1,7 @@
 const companyModels = require('../models/companys')
+const multer = require('multer')
 const uuid = require('uuid/v4')
+const upload = multer({dest:'../uploads/'});
 
 module.exports = {  
     getCompany: function(req,res){

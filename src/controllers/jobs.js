@@ -3,13 +3,48 @@ const uuid = require('uuid/v4')
 
 module.exports = {  
     getJob: function(req,res){
-        jobModels.getJob()
+      const {by,words,sortBy,mode,page,limit}= req.query
+      if(by!=undefined || words != undefined){
+        jobModels.searchJob(by,words)
+        .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }else if(sortBy!=undefined || mode != undefined){
+          jobModels.sortBy(sortBy,mode)
+          .then(result => {
+            res.json(result)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }else if(page!=undefined  &&  limit!=undefined){
+        if(page<1){
+          page=1
+        }
+       let  pages = parseInt(page)
+       let limits= parseInt(limit)
+        let offset =(pages-1)*limits
+        jobModels.paginationJob(limits,offset)
         .then(result=>{
             res.json(result)
         })
         .catch(err=>{
             console.log(err)
         })
+        }
+        else {
+          jobModels.getJob()
+          .then(result=>{
+              res.json(result)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+      }
+       
     },
     addJob: function(req,res){
         const id = uuid()
@@ -58,38 +93,4 @@ module.exports = {
             console.log(err)
           })
       },
-      searchJob: function(req,res){
-        const by = req.query.by
-        const words = req.query.words
-        jobModels.searchJob(by,words)
-        .then(result => {
-            res.json(result)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      },
-      sortBy: function(req,res){
-        const sortBy = req.params.sortBy
-        const mode = req.params.mode
-        jobModels.sortBy(sortBy,mode)
-        .then(result => {
-          res.json(result)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      },
-      paginationJob: function(req,res){
-        const limit  = 2
-        const page = req.query.page || 1
-        let offset =(page-1)*limit
-        jobModels.paginationJob(limit,offset)
-        .then(result=>{
-            res.json(result)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }
 }

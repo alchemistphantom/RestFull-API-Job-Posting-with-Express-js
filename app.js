@@ -5,6 +5,7 @@ const routerNav = require('./src/index')
 const logger = require('morgan')
 const app = express()
 const port = config.port
+const cors = require('cors')
 
 app.listen(port,function(){
     console.log(`Server Listening on port ${port}`)
@@ -14,5 +15,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use('/',routerNav)
 app.use(logger('dev'))
+app.use(cors())
 
 module.exports = app

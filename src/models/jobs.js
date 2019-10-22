@@ -5,7 +5,7 @@ module.exports={
         return new Promise(function(resolve,reject){
             conn.query('SELECT * FROM view_data',function(err,result){
                 if (!err) {
-                    resolve(result)
+                    resolve({result, count_data: result.length})
                   } else {
                     reject(new Error(err))
                   }
@@ -56,21 +56,24 @@ module.exports={
             })
         })
     },
-    byCompany: function(company){
+    sortBy: function(by,mode){
         return new Promise(function(resolve,reject){
-            conn.query('SELECT * FROM view_data WHERE company LIKE ?','%' + company + '%',function(err,result){
+            conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode}`,function(err,result){
                 if (!err) {
+                    {
                     resolve(result)
+                    }
                   } else {
                     reject(new Error(err))
                   }
             })
         })
     },
-    sortBy: function(by,mode){
+    paginationJob: function(limit,offset){
         return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode}`,function(err,result){
+            conn.query('SELECT * FROM view_data LIMIT ? OFFSET ? ',[limit,offset],function(err,result){
                 if (!err) {
+        
                     resolve(result)
                   } else {
                     reject(new Error(err))

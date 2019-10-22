@@ -59,25 +59,15 @@ module.exports = {
           })
       },
       searchJob: function(req,res){
-        const by = req.params.by
-        const search = req.query.search
-        jobModels.searchJob(by,search)
+        const by = req.query.by
+        const words = req.query.words
+        jobModels.searchJob(by,words)
         .then(result => {
             res.json(result)
           })
           .catch(err => {
             console.log(err)
           })
-      },
-      byCompany: function(req,res){
-        const company = req.query.company
-        jobModels.byCompany(company)
-        .then(result => {
-          res.json(result)
-        })
-        .catch(err => {
-          console.log(err)
-        })
       },
       sortBy: function(req,res){
         const sortBy = req.params.sortBy
@@ -89,5 +79,17 @@ module.exports = {
         .catch(err => {
           console.log(err)
         })
-      }
+      },
+      paginationJob: function(req,res){
+        const limit  = 2
+        const page = req.query.page || 1
+        let offset =(page-1)*limit
+        jobModels.paginationJob(limit,offset)
+        .then(result=>{
+            res.json(result)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
 }

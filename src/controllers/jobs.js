@@ -3,7 +3,8 @@ const uuid = require('uuid/v4')
 
 module.exports = {  
     getJob: function(req,res){
-      const {by,words,sortBy,mode,page,limit}= req.query
+      let {by,words,sortBy,mode,page,limit}= req.query
+      let offset;
       if(by!=undefined || words != undefined){
         jobModels.searchJob(by,words)
         .then(result => {
@@ -12,28 +13,24 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
-        }else if(sortBy!=undefined || mode != undefined){
-          jobModels.sortBy(sortBy,mode)
+        }else if((sortBy!=undefined || mode != undefined) || (page!=undefined || limit != undefined)){
+          if(sortBy==undefined && mode == undefined){
+            sortBy='date_added'
+            mode = 'asc'
+          }else if((page==undefined && limit == undefined) && offset==undefined){
+            page=1
+            limit=5
+          }
+          offset =(page-1)*limit
+          console.log(sortBy+','+mode+','+limit+','+offset)
+         
+          jobModels.sortPaging(sortBy,mode,limit,offset)
           .then(result => {
             res.json(result)
           })
           .catch(err => {
             console.log(err)
           })
-        }else if(page!=undefined  &&  limit!=undefined){
-        if(page<1){
-          page=1
-        }
-       let  pages = parseInt(page)
-       let limits= parseInt(limit)
-        let offset =(pages-1)*limits
-        jobModels.paginationJob(limits,offset)
-        .then(result=>{
-            res.json(result)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
         }
         else {
           jobModels.getJob()

@@ -56,24 +56,13 @@ module.exports={
             })
         })
     },
-    sortBy: function(by,mode){
+    sortPaging: function(by,mode,limit,offset){
         return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode}`,function(err,result){
+            conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode} LIMIT ${limit} OFFSET ${offset}`,function(err,result){
                 if (!err) {
                     {
                     resolve(result)
                     }
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
-    },
-    paginationJob: function(limit,offset){
-        return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data LIMIT ${limit} OFFSET ${offset} `,function(err,result){
-                if (!err) {
-                    resolve(result)
                   } else {
                     reject(new Error(err))
                   }

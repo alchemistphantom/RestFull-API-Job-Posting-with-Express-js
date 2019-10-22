@@ -52,6 +52,9 @@ module.exports = {
           .catch(err => {
             console.log(err)
           })
+      },
+      uploadLogo: function(req,res){
+       
       }
    
 }

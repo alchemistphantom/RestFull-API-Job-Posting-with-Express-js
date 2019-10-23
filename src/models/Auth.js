@@ -1,20 +1,8 @@
 const conn = require('../configs/db')
-
 module.exports={
-    getJob: function(){
+    Register: function(data){
         return new Promise(function(resolve,reject){
-            conn.query('SELECT * FROM view_data',function(err,result){
-                if (!err) {
-                    resolve({result, count_data: result.length})
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
-    },
-    addJob: function(data){
-        return new Promise(function(resolve,reject){
-            conn.query('INSERT INTO tb_job SET ?',data,function(err,result){
+            conn.query('INSERT INTO tb_user SET ?',data,function(err,result){
                 if (!err) {
                     resolve(result)
                   } else {
@@ -23,9 +11,9 @@ module.exports={
             })
         })
     },
-    updateJob: function(data,jobID){
+    Login: function(username,password){
         return new Promise(function(resolve,reject){
-            conn.query('UPDATE tb_job SET ? WHERE id = ?',[data,jobID],function(err,result){
+            conn.query('SELECT * FROM tb_user WHERE email = ? AND password= ?',[username,password],function(err,result){
                 if (!err) {
                     resolve(result)
                   } else {
@@ -34,9 +22,35 @@ module.exports={
             })
         })
     },
-    deleteJob: function(jobID){
+    
+    VerifyEmail: function(email){
         return new Promise(function(resolve,reject){
-            conn.query('DELETE FROM tb_job WHERE id = ?',[jobID],function(err,result){
+            conn.query('SELECT * FROM tb_user WHERE email = ? ',email,function(err,result){
+                if (!err) {
+                    resolve(result)
+                    //result.password;
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
+    },
+
+    getUser: function(email,password){
+        return new Promise(function(resolve,reject){
+            conn.query('SELECT * FROM tb_user WHERE email = ? AND password= ?',[email,password],function(err,result){
+                if (!err) {
+                    resolve(result)
+                  
+                  } else {
+                    reject(new Error(err))
+                  }
+            })
+        })
+    },
+    getUserID: function(email){
+        return new Promise(function(resolve,reject){
+            conn.query('SELECT * FROM tb_user WHERE id = ? ',id,function(err,result){
                 if (!err) {
                     resolve(result)
                   } else {
@@ -44,29 +58,6 @@ module.exports={
                   }
             })
         })
-    },
-     searchJob: function(by,name){
-        return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data WHERE ${by} LIKE ?`,'%' + name + '%',function(err,result){
-                  if (!err) {
-                    resolve(result)
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
-    },
-    sortPaging: function(by,mode,limit,offset){
-        return new Promise(function(resolve,reject){
-            conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode} LIMIT ? OFFSET ? `,[parseInt(limit),parseInt(offset)],function(err,result){
-                if (!err) {
-                    {
-                    resolve(result)
-                    }
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
+
     }
 }

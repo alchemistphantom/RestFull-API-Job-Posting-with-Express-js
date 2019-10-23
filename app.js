@@ -1,5 +1,7 @@
+require('./src/helper/passport')
 const express = require('express')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 const config = require('./src/configs/configs')
 const routerNav = require('./src/index')
 const logger = require('morgan')
@@ -16,5 +18,6 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use('/',routerNav)
 app.use(logger('dev'))
 app.use(cors())
+app.use(passport.initialize())
 
 module.exports = app

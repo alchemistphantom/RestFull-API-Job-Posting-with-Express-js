@@ -8,7 +8,11 @@ module.exports = {
       if(by!=undefined || words != undefined){
         jobModels.searchJob(by,words)
         .then(result => {
+          if(result.length!=0){
             res.json(result)
+          }else{
+            res.send(words+' Data Not Found')
+          }
           })
           .catch(err => {
             console.log(err)

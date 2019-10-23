@@ -1,7 +1,8 @@
 const companyModels = require('../models/companys')
+const UploadLogo = require('../controllers/uploads')
 const multer = require('multer')
 const uuid = require('uuid/v4')
-const upload = multer({dest:'../uploads/'});
+const path = require('path')
 
 module.exports = {  
     getCompany: function(req,res){
@@ -14,7 +15,7 @@ module.exports = {
         })
     },
     addCompany: function(req,res){
-        const id = uuid()
+      const id = uuid()
         const {name,logo,location,description} = req.body
         const data = {
             id,
@@ -54,7 +55,9 @@ module.exports = {
           })
       },
       uploadLogo: function(req,res){
-       
+
       }
+
+      
    
 }

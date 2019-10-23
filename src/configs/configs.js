@@ -9,5 +9,7 @@ module.exports = {
             database:process.env.DB_NAME
         }
     },
-    port: process.env.PORT
+    port: process.env.PORT,
+    jwtSecret: process.env.JWT_KEY,
+    headerSecret:process.env.HEADERS_SECRET
 }

@@ -1,17 +1,12 @@
 
+const auth = require('../helper/Auths')
 const express = require('express')
 const Route = express.Router()
 const jobControllers = require('../controllers/jobs')
-const passport = require('passport');
 
-app = express()
-app.use(passport.initialize());
-app.use(passport.session());
-const isAuthenticate = passport.authenticate('jwt',{session:false})
-require('../helper/passport')
 Route
-.get('/',jobControllers.getJob)
-.post('/', jobControllers.addJob)
-.patch('/:JobID',jobControllers.updateJob)
-.delete('/:JobID',jobControllers.deleteJob)
+.get('/',auth.authInfo,auth.authAccess,jobControllers.getJob)
+.post('/',auth.authInfo,auth.authAccess, jobControllers.addJob)
+.patch('/:JobID',auth.authInfo,auth.authAccess,jobControllers.updateJob)
+.delete('/:JobID',auth.authInfo,auth.authAccess,jobControllers.deleteJob)
 module.exports = Route

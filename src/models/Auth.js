@@ -47,17 +47,5 @@ module.exports={
                   }
             })
         })
-    },
-    getUserID: function(email){
-        return new Promise(function(resolve,reject){
-            conn.query('SELECT * FROM tb_user WHERE id = ? ',id,function(err,result){
-                if (!err) {
-                    resolve(result)
-                  } else {
-                    reject(new Error(err))
-                  }
-            })
-        })
-
     }
 }

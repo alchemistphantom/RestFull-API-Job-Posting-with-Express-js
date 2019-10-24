@@ -1,4 +1,4 @@
-const conn = require('../configs/db')
+const conn = require('../configs/db').default
 
 module.exports={
     getCategory: function(){

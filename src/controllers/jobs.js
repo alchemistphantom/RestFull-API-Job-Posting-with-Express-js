@@ -1,5 +1,7 @@
+const init = require('../configs/configs')
 const jobModels = require('../models/jobs')
 const uuid = require('uuid/v4')
+const redis = require('../helper/redis')
 
 module.exports = {  
     getJob: function(req,res){
@@ -9,6 +11,8 @@ module.exports = {
         jobModels.searchJob(by,words)
         .then(result => {
           if(result.length!=0){
+            let data = JSON.stringify(result)
+            redis.caching(req.originalUrl,data);
             res.json(result)
           }else{
             res.send(words+' Data Not Found')
@@ -39,6 +43,8 @@ module.exports = {
         else {
           jobModels.getJob()
           .then(result=>{
+            let data = JSON.stringify(result)
+            redis.caching(req.originalUrl,data);
               res.json(result)
           })
           .catch(err=>{
@@ -48,6 +54,7 @@ module.exports = {
        
     },
     addJob: function(req,res){
+        redis.delCache(req.originalUrl)
         const id = uuid()
         const date_updated = new Date().toLocaleString
         const {name,description,id_category,salary,location,id_company} = req.body
@@ -71,6 +78,7 @@ module.exports = {
           })
     }, 
     updateJob: function(req,res){
+      redis.delCache(req.originalUrl)
       const JobID = req.params.JobID
       const date_updated = new Date()
       req.body.date_updated = date_updated
@@ -85,10 +93,11 @@ module.exports = {
         })
     },
       deleteJob: function(req,res){
+        redis.delCache(req.originalUrl)
         const JobID = req.params.JobID
         jobModels.deleteJob(JobID)
         .then(result => {
-            res.json(result)
+            res.status(200).json(result)
           })
           .catch(err => {
             console.log(err)

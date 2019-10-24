@@ -75,16 +75,15 @@ module.exports = {
                           const token = jwt.sign(user,process.env.JWT_KEY, { expiresIn: '1h' })
                           res.json({user,token})
                 
-                        }else res.send('Passwords did not match')
+                        }else res.json('Passwords did not match')
                       })
                       .catch(err => {
                         console.log(err)
                       })
-                }else res.send('Email Not Registered')
+                }else res.json('Email Not Registered')
               })
               .catch(err => {
                 console.log(err)
               })
-            
             }
         }

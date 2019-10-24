@@ -1,4 +1,4 @@
-const conn = require('../configs/db')
+const conn = require('../configs/db').default
 module.exports={
     Register: function(data){
         return new Promise(function(resolve,reject){

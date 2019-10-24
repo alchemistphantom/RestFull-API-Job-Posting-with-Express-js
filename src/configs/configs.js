@@ -11,5 +11,7 @@ module.exports = {
     },
     port: process.env.PORT,
     jwtSecret: process.env.JWT_KEY,
-    headerSecret:process.env.HEADERS_SECRET
+    headerSecret:process.env.HEADERS_SECRET,
+    redis_key:process.env.REDIS_KEY
+
 }

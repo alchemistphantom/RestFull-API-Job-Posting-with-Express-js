@@ -1,5 +1,6 @@
 const JWT = require('jsonwebtoken');
 const config = require('../configs/configs')
+
     module.exports = {
         authInfo: (req, res, next) => {
           const headerAuth = req.headers['authorization'] 
@@ -22,12 +23,13 @@ const config = require('../configs/configs')
         authAccess: (req, res, next) => {
           const accessToken = req.token
           const userToken = req.headers['x-control-user']
+      
           JWT.verify(accessToken, config.jwtSecret, (err, decoded) => {
             if (err && err.name === 'TokenExpiredError') return res.status(403).json({ message: 'Token expired!' })
             if (err && err.name === 'JsonWebTokenError') return res.status(403).json({ message: 'Token invalid!' })
-           if (parseInt(userToken) !== parseInt(decoded.userid)) return res.status(403).json({ message: 'Invalid User!' })
+           // if (parseInt(userToken) !== parseInt(decoded.userid)) return res.status(403).json({ message: 'Invalid User!' })
+      
             console.log('Access Granted!')
-            
             next()
           })
         }

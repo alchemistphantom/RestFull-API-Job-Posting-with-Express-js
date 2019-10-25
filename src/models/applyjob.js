@@ -2,9 +2,9 @@
 const conn = require('../configs/db');
 
 module.exports={
-  getCompany: function() {
+  getApply: function() {
     return new Promise(function(resolve, reject) {
-      conn.query('SELECT * FROM tb_company', function(err, result) {
+      conn.query('SELECT * FROM view_Apply', function(err, result) {
         if (!err) {
           resolve(result);
         } else {
@@ -13,9 +13,9 @@ module.exports={
       });
     });
   },
-  addCompany: function(data) {
+  addApply: function(data) {
     return new Promise(function(resolve, reject) {
-      conn.query('INSERT INTO tb_company SET ?', data, function(err, result) {
+      conn.query('INSERT INTO tb_Apply SET ?', data, function(err, result) {
         if (!err) {
           resolve(result);
         } else {
@@ -24,9 +24,9 @@ module.exports={
       });
     });
   },
-  updateCompany: function(data, companyID) {
+  updateApply: function(data, ApplyID) {
     return new Promise(function(resolve, reject) {
-      conn.query('UPDATE tb_company SET ? WHERE id = ?', [data, companyID], function(err, result) {
+      conn.query('UPDATE tb_Apply SET ? WHERE id = ?', [data, ApplyID], function(err, result) {
         if (!err) {
           resolve(result);
         } else {
@@ -35,9 +35,9 @@ module.exports={
       });
     });
   },
-  deleteCompany: function(companyID) {
+  deleteApply: function(ApplyID) {
     return new Promise(function(resolve, reject) {
-      conn.query('DELETE FROM tb_company WHERE id = ?', companyID, function(err, result) {
+      conn.query('DELETE FROM tb_Apply WHERE id = ?', ApplyID, function(err, result) {
         if (!err) {
           resolve(result);
         } else {
@@ -46,12 +46,13 @@ module.exports={
       });
     });
   },
-  verifyCompany: function(name) {
-    const qry = 'SELECT * FROM tb_company WHERE name = ? ';
+  verifyApply: function(user, job) {
+    const qry = 'SELECT * FROM tb_apply WHERE user_id = ? AND job_id =? ';
     return new Promise(function(resolve, reject) {
-      conn.query(qry, name, function(err, result) {
+      conn.query(qry, [user, job], function(err, result) {
         if (!err) {
           resolve(result);
+          // result.password;
         } else {
           reject(new Error(err));
         }

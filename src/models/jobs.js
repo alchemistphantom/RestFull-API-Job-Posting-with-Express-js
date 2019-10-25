@@ -70,4 +70,16 @@ module.exports={
       });
     });
   },
+  verifyCompany: function(name) {
+    const qry = 'SELECT * FROM tb_job WHERE name = ? ';
+    return new Promise(function(resolve, reject) {
+      conn.query(qry, name, function(err, result) {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
+  },
 };

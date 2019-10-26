@@ -15,7 +15,8 @@ module.exports = {
   },
   addCompany: function(req, res) {
     const id = uuid();
-    const {name, logo, location, description} = req.body;
+    const {name, location, description} = req.body;
+    const logo = req.file.filename;
     const data = {
       id,
       name,

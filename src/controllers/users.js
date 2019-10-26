@@ -6,35 +6,27 @@ const AuthModels = require('../models/users');
 const utils = require('../helper/utils');
 const uuid = require('uuid/v4');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const algorithm = 'aes-256-ctr';
-const password = 'd6F3Efeq';
-const iv = Buffer.alloc(16, 0); // Initialization vector.
-function encrypt(text) {
-  const cipher = crypto.createCipher(algorithm, password, iv);
-  let crypted = cipher.update(text, 'utf8', 'hex');
-  crypted += cipher.final('hex');
-  return crypted;
-}
-
-function decrypt(text) {
-  const decipher = crypto.createDecipher(algorithm, password, iv);
-  let dec = decipher.update(text, 'hex', 'utf8');
-  dec += decipher.final('utf8');
-  return dec;
-}
 
 module.exports = {
   Register: function(req, res) {
     const id = uuid();
-    let {email, username, password} = req.body;
-    password = encrypt(password);
-    console.log(decrypt(password));
+    const {email, username, password} = req.body;
+    console.log(email);
+    console.log(utils.checkValidEmail(email));
+    if (!utils.checkValidEmail(email)) {
+      res.json('email tidak valid');
+      return;
+    }
+
+    const salt = utils.generateSalt(32);
+    const pass = utils.setPassword(password, salt);
+    const passwordHash = pass.passwordHash;
     const data = {
       id,
       email,
       username,
-      password,
+      salt,
+      passwordHash,
     };
     AuthModels.VerifyEmail(email)
         .then((result) => {
@@ -69,10 +61,17 @@ module.exports = {
                 id: result[0].id,
                 email: result[0].email,
               };
-              const pass = decrypt(result[0].password);
+              const salt = result[0].salt;
+              const passDb = result[0].passwordHash;
+              const passwordHash = utils.setPassword(password, salt);
+              const check = utils.comparingPassword(passDb, passwordHash.passwordHash);
+              console.log(passDb);
+              console.log(passwordHash.passwordHash);
+              console.log(check);
+              // const pass = decrypt(result[0].password);
               AuthModels.Login(email)
-                  .then((result) => {
-                    if (pass==password) {
+                  .then(() => {
+                    if (check==true) {
                       const token = jwt.sign(user, process.env.JWT_KEY, {expiresIn: 60*60});
                       res.json({
                         message: 'success login',
@@ -88,7 +87,7 @@ module.exports = {
           .catch((err) => {
             console.log(err);
           });
-    }else {
+    } else {
       AuthModels.getUser()
           .then((result)=>{
             utils.chekingData(res, result, ' data user is empty');

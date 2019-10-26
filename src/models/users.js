@@ -14,7 +14,7 @@ module.exports={
   },
   Login: function(username, password) {
     return new Promise(function(resolve, reject) {
-      conn.query('SELECT * FROM tb_user WHERE email = ? AND password= ?', [username, password], function(err, result) {
+      conn.query('SELECT * FROM tb_user WHERE email = ? AND passwordHash = ?', [username, password], function(err, result) {
         if (!err) {
           resolve(result);
         } else {

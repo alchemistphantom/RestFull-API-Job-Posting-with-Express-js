@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 const crypto = require('crypto');
 const regex =/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-
 module.exports = {
   chekingData: function(res, result, message) {
     if (result.length!=0) {
@@ -12,11 +11,25 @@ module.exports = {
       res.json(message);
     }
   },
-  response: (res, status, data) => {
-    console.log('Response');
+  responseGetll: (res, status, error, message, page, count, resultCount, pageCount, limit, data) => {
+    res.json({
+      status: status,
+      error: error,
+      message: message,
+      page: page,
+      count_data: count,
+      result_count: resultCount,
+      page_count: pageCount,
+      limit: limit,
+      data,
+    });
   },
-  customErrorResponse: (res, status, message) => {
-    console.log('Error Response!');
+  response: (res, status, error, message) => {
+    res.json({
+      status: status,
+      error: error,
+      message: message,
+    });
   },
   generateSalt: (length) => {
     console.log('Generate Salt!');
@@ -37,34 +50,19 @@ module.exports = {
     }
     return false;
   },
-  getAllResponse: (res, status, error, message, result, page, limit, totalPage, totalData) => {
-    res.json({
-      status: status,
-      error: error,
-      message: message,
-      page: page,
-      limit: limit,
-      totalPage,
-      totalData,
-      data: result,
-    });
-    console.log('Error Response!');
-  },
-
-  response: (res, status, error, message, result) => {
-    res.json({
-      status: status,
-      error: error,
-      message: message,
-      data: result,
-    });
-    console.log('Error Response!');
-  },
-
   checkValidEmail: (email) => {
     if (regex.test(email)) {
       return true;
     }
   },
-
+  checking_field: (res, data)=> {
+    const values = Object.values(data);
+    for (let i=1; i<values.length-1; i++) {
+      console.log(values[i]);
+      if (values[i]!=null) {
+        console.log('ada isinya');
+        return true;
+      }
+    }
+  },
 };

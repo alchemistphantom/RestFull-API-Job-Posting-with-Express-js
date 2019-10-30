@@ -1,10 +1,9 @@
 /* eslint-disable max-len */
 const conn = require('../configs/db');
-
 module.exports={
-  getJob: function() {
+  getJob: function(limit, offset) {
     return new Promise(function(resolve, reject) {
-      conn.query('SELECT * FROM view_data', function(err, result) {
+      conn.query('SELECT * FROM view_data LIMIT 5 OFFSET 0', function(err, result) {
         if (!err) {
           resolve({result, count_data: result.length});
         } else {
@@ -57,6 +56,21 @@ module.exports={
       });
     });
   },
+
+  getAllJob: function(wordsKey, words, sortBy, mode, limit, offset) {
+    return new Promise(function(resolve, reject) {
+      conn.query(`SELECT * FROM view_data WHERE ${wordsKey} LIKE ? ORDER\
+       BY ${sortBy} ${mode} LIMIT ? OFFSET ? \
+       `, ['%'+ words +'%', parseInt(limit), parseInt(offset)], function(err, result) {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
+  },
+
   sortPaging: function(by, mode, limit, offset) {
     return new Promise(function(resolve, reject) {
       conn.query(`SELECT * FROM view_data ORDER BY ${by} ${mode} LIMIT ? OFFSET ? `, [parseInt(limit), parseInt(offset)], function(err, result) {
@@ -74,6 +88,18 @@ module.exports={
     const qry = 'SELECT * FROM tb_job WHERE name = ? ';
     return new Promise(function(resolve, reject) {
       conn.query(qry, name, function(err, result) {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
+  },
+  getCount: function() {
+    const qry = 'SELECT COUNT(*) as count FROM view_data';
+    return new Promise(function(resolve, reject) {
+      conn.query(qry, function(err, result) {
         if (!err) {
           resolve(result);
         } else {

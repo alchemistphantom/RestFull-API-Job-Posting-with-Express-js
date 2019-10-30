@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 const redis = require('redis');
 const port = 6000;
 const client = redis.createClient();
+const utils = require('../helper/utils');
 
 client.on('connect', () => {
   console.log(`Redis client connected port ${port} `);

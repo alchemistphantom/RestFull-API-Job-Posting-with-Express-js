@@ -36,15 +36,15 @@ module.exports={
       });
     });
   },
-  getUser: function() {
-    return new Promise(function(resolve, reject) {
-      conn.query('SELECT * FROM tb_user ', function(err, result) {
-        if (!err) {
-          resolve(result);
-        } else {
-          reject(new Error(err));
-        }
-      });
-    });
-  },
+  // getUser: function() {
+  //   return new Promise(function(resolve, reject) {
+  //     conn.query('SELECT * FROM tb_user ', function(err, result) {
+  //       if (!err) {
+  //         resolve(result);
+  //       } else {
+  //         reject(new Error(err));
+  //       }
+  //     });
+  //   });
+  // },
 };

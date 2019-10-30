@@ -6,7 +6,8 @@ module.exports = {
   getCategory: function(req, res) {
     CategoryModels.getCategory()
         .then((result)=>{
-          utils.chekingData(res, result, ' data category is empty');
+          // eslint-disable-next-line max-len
+          utils.response(res, 200, false, 'success get all data', result.length, result);
         })
         .catch((err)=>{
           res.status(400).json('failed to get data');

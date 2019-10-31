@@ -45,6 +45,18 @@ module.exports={
       });
     });
   },
+  singleJob: function(jobID) {
+    console.log('id job '+jobID);
+    return new Promise(function(resolve, reject) {
+      conn.query('SELECT * FROM view_data WHERE id = ?', [jobID], function(err, result) {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
+  },
   searchJob: function(by, name) {
     return new Promise(function(resolve, reject) {
       conn.query(`SELECT * FROM view_data WHERE ${by} LIKE ?`, '%' + name + '%', function(err, result) {

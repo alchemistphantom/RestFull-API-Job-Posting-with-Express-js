@@ -16,7 +16,8 @@ module.exports = {
   addCompany: function(req, res) {
     const id = uuid();
     const {name, location, description} = req.body;
-    const logo = req.file.filename;
+    const host = req.hostname;
+    const logo = req.protocol+'://'+host+':'+process.env.PORT+'/src/images/'+req.file.filename;
     const data = {
       id,
       name,
@@ -28,17 +29,20 @@ module.exports = {
         .then((result) => {
           if (result.length!=0) {
             res.json({
+              status: 200,
               message: 'data already exist!',
-              result});
+              data});
           } else {
             companyModels.addCompany(data)
                 .then((result) => {
                   res.json({
+                    status: 401,
                     message: 'success insert company data',
-                    result});
+                    data});
                 })
                 .catch((err) => {
                   res.json({
+                    status: 400,
                     message: 'failed insert company data!',
                     err: err});
                   console.log(err);

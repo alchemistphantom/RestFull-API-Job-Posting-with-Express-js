@@ -216,4 +216,30 @@ module.exports = {
           console.log(err);
         });
   },
+  singleJob: function(req, res) {
+    redis.delCache(req.originalUrl);
+    const JobID = req.params.JobID;
+    jobModels.singleJob(JobID)
+        .then((result) => {
+          if (result.length>0) {
+            res.status(200).json({
+              message: 'success get single job',
+              result,
+            });
+          } else {
+            res.json({
+              status: 200,
+              error: false,
+              message: 'not found data',
+              result,
+            });
+          }
+        })
+        .catch((err) => {
+          res.json({
+            message: 'failed get single job data!',
+            err: err});
+          console.log(err);
+        });
+  },
 };

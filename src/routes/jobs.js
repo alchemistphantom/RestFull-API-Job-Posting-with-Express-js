@@ -10,7 +10,7 @@ const redis = require('../helper/redis');
 Route
     .get('/:JobID', jobControllers.singleJob)
     .get('/', redis.getJobCached, jobControllers.getAllJob)
-    .post('/', auth.authInfo, auth.authAccess, jobControllers.addJob)
-    .patch('/:JobID', auth.authInfo, auth.authAccess, jobControllers.updateJob)
-    .delete('/:JobID', auth.authInfo, auth.authAccess, jobControllers.deleteJob);
+    .post('/', jobControllers.addJob)
+    .patch('/:JobID', jobControllers.updateJob)
+    .delete('/:JobID', jobControllers.deleteJob);
 module.exports = Route;

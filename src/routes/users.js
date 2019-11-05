@@ -4,7 +4,6 @@ const Route = express.Router();
 const AuthControllers = require('../controllers/users');
 
 Route
-    .get('/', AuthControllers.Login)
+    .post('/login', AuthControllers.Login)
     .post('/', AuthControllers.Register);
-    
 module.exports = Route;

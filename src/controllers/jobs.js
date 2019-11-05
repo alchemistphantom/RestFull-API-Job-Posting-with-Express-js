@@ -114,11 +114,11 @@ module.exports = {
           } else {
             page=1;
             limit=5;
-            const page_count = Math.ceil(count/limit);
+            // const page_count = Math.ceil(count/limit);
             offset =(page-1)*limit;
             jobModels.getJob()
                 .then((result)=>{
-                  const data = JSON.stringify(result);
+                  // const data = JSON.stringify(result);
                   // redis.caching(req.originalUrl, data);
                   res.json(result);
                   // utils.responseGetll(res, 200, false, 'success', page, count, result.length, page_count, limit, result);
@@ -152,17 +152,20 @@ module.exports = {
         .then((result) => {
           if (result.length!=0) {
             res.json({
+              status: 202,
               message: 'data already exist!',
               result});
           } else {
             jobModels.addJob(data)
                 .then((result) => {
                   res.json({
+                    status: 200,
                     message: 'success insert job data',
                     result});
                 })
                 .catch((err) => {
                   res.json({
+                    status: 400,
                     message: 'failed insert job data!',
                     err: err});
                   console.log(err);
@@ -204,7 +207,7 @@ module.exports = {
     const JobID = req.params.JobID;
     jobModels.deleteJob(JobID)
         .then((result) => {
-          res.status(200).json({
+          return res.status(200).json({
             message: 'success delete job',
             result,
           });

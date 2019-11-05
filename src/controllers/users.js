@@ -94,6 +94,7 @@ module.exports = {
                   if (check==true) {
                     const token = jwt.sign(user, process.env.JWT_KEY, {expiresIn: 60*60});
                     res.json({
+                      status: 200,
                       message: 'success login',
                       user,
                       token});

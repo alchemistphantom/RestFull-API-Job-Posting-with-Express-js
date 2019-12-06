@@ -16,10 +16,11 @@ module.exports = {
   getJobCached: function(req, res, next) {
     client.get(req.originalUrl, (err, result) => {
       if (result != null) {
-        console.log("ada bang");
+        console.log("ada cahce bang");
         res.json({
           status: 200,
           succeed: true,
+          timeout: 60,
           massage: "Success get from redis cache",
           result: JSON.parse(result)
         });

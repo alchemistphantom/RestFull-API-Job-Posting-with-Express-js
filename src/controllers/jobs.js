@@ -25,8 +25,6 @@ module.exports = {
           .getAllJob(wordsKey, words, sortBy, mode, limit, offset)
           .then(result => {
             if (result.length != 0) {
-              const data = JSON.stringify(result);
-              redis.caching(req.originalUrl, data);
             } else {
               res.json(words + " Data Not Found");
             }
@@ -55,7 +53,7 @@ module.exports = {
             if (count === 0) {
               message = "Data Not Found";
             }
-            res.json({
+            const dataResult = {
               info: {
                 status: 200,
                 error: false,
@@ -71,7 +69,10 @@ module.exports = {
                 next: `http://localhost:5000/job/?page=${next}`
               },
               result
-            });
+            };
+            res.json({ dataResult });
+            const data = JSON.stringify(dataResult);
+            redis.caching(req.originalUrl, data);
           })
           .catch(err => {
             console.log(err);

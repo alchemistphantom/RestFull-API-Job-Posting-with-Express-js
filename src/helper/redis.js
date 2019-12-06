@@ -18,9 +18,7 @@ module.exports = {
       if (result != null) {
         console.log("ada cahce bang");
         res.json({
-          status: 200,
-          succeed: true,
-          timeout: 60,
+          timeout: 10,
           massage: "Success get from redis cache",
           result: JSON.parse(result)
         });
@@ -30,7 +28,7 @@ module.exports = {
     });
   },
   caching: (key, data) => {
-    client.setex(key, 60, data);
+    client.setex(key, 10, data);
   },
   delCache: function() {
     client.flushdb(function(err, succeeded) {

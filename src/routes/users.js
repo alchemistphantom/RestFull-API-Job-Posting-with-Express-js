@@ -1,9 +1,10 @@
 /* eslint-disable new-cap */
-const express = require('express');
+const express = require("express");
 const Route = express.Router();
-const AuthControllers = require('../controllers/users');
+const AuthControllers = require("../controllers/users");
 
-Route
-    .post('/login', AuthControllers.Login)
-    .post('/', AuthControllers.Register);
+Route.get("/", AuthControllers.getUser)
+  .get("/:id", AuthControllers.getSingleData)
+  .post("/login", AuthControllers.Login)
+  .post("/", AuthControllers.Register);
 module.exports = Route;

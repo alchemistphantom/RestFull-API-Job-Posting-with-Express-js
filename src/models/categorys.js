@@ -1,10 +1,24 @@
 /* eslint-disable max-len */
-const conn = require('../configs/db');
+const conn = require("../configs/db");
 
-module.exports={
+module.exports = {
   getCategory: function() {
     return new Promise(function(resolve, reject) {
-      conn.query('SELECT * FROM tb_category', function(err, result) {
+      conn.query("SELECT * FROM tb_category", function(err, result) {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
+  },
+  getSingle: function(id) {
+    return new Promise(function(resolve, reject) {
+      conn.query("SELECT * FROM tb_category WHERE id = ?", id, function(
+        err,
+        result
+      ) {
         if (!err) {
           resolve(result);
         } else {
@@ -15,7 +29,7 @@ module.exports={
   },
   addCategory: function(data) {
     return new Promise(function(resolve, reject) {
-      conn.query('INSERT INTO tb_category SET ?', data, function(err, result) {
+      conn.query("INSERT INTO tb_category SET ?", data, function(err, result) {
         if (!err) {
           resolve(result);
         } else {
@@ -26,18 +40,25 @@ module.exports={
   },
   updateCategory: function(data, CategoryID) {
     return new Promise(function(resolve, reject) {
-      conn.query('UPDATE tb_category SET ? WHERE id = ?', [data, CategoryID], function(err, result) {
-        if (!err) {
-          resolve(result);
-        } else {
-          reject(new Error(err));
+      conn.query(
+        "UPDATE tb_category SET ? WHERE id = ?",
+        [data, CategoryID],
+        function(err, result) {
+          if (!err) {
+            resolve(result);
+          } else {
+            reject(new Error(err));
+          }
         }
-      });
+      );
     });
   },
   deleteCategory: function(CategoryID) {
     return new Promise(function(resolve, reject) {
-      conn.query('DELETE FROM tb_category WHERE id = ?', CategoryID, function(err, result) {
+      conn.query("DELETE FROM tb_category WHERE id = ?", CategoryID, function(
+        err,
+        result
+      ) {
         if (!err) {
           resolve(result);
         } else {
@@ -47,7 +68,7 @@ module.exports={
     });
   },
   verifyCategory: function(name) {
-    const qry = 'SELECT * FROM tb_category WHERE name = ? ';
+    const qry = "SELECT * FROM tb_category WHERE name = ? ";
     return new Promise(function(resolve, reject) {
       conn.query(qry, name, function(err, result) {
         if (!err) {
@@ -57,5 +78,5 @@ module.exports={
         }
       });
     });
-  },
+  }
 };

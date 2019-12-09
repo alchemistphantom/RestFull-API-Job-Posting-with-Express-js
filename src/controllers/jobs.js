@@ -5,6 +5,7 @@ const uuid = require("uuid/v4");
 const redis = require("../helper/redis");
 const utils = require("../helper/utils");
 const moment = require("moment");
+const baselink = "http://ec2-54-167-195-205.compute-1.amazonaws.com:3000/job/";
 
 module.exports = {
   getAllJob: function(req, res) {
@@ -65,8 +66,8 @@ module.exports = {
                 count_data: count,
                 hasPrev: hasPrev,
                 hasNext: hasNext,
-                prev: `http://localhost:5000/job/?page=${prev}`,
-                next: `http://localhost:5000/job/?page=${next}`
+                prev: baselink + `?page=${prev}`,
+                next: baselink + `?page=${next}`
               },
               result
             };

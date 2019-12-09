@@ -5,7 +5,8 @@ const uuid = require("uuid/v4");
 const redis = require("../helper/redis");
 const utils = require("../helper/utils");
 const moment = require("moment");
-const baselink = "http://ec2-54-167-195-205.compute-1.amazonaws.com:3000/job/";
+const config = require("../configs/configs");
+const baselink = config.base_link;
 
 module.exports = {
   getAllJob: function(req, res) {
@@ -17,7 +18,7 @@ module.exports = {
         sortBy = sortBy || "date_added";
         mode = mode || "asc";
         wordsKey = wordsKey || "name";
-        limit = limit || 5;
+        limit = limit || 10;
         page = page || 1;
         words = words || "";
         const offset = (page - 1) * limit;
@@ -29,10 +30,13 @@ module.exports = {
             } else {
               res.json(words + " Data Not Found");
             }
-            if (wordsKey !== null) {
+            console.log(words);
+
+            if (words !== "") {
+              console.log("apkah ada");
               count = result.length;
             }
-            const page_count = Math.ceil(count / limit);
+            const page_count = Math.ceil(10 / limit);
             let hasPrev;
             let hasNext;
             let prev = page - 1;
@@ -61,15 +65,15 @@ module.exports = {
                 message,
                 page: page,
                 Result_count: result.length,
+                allData: count,
                 page_count: page_count,
                 limit: limit,
-                count_data: count,
                 hasPrev: hasPrev,
                 hasNext: hasNext,
-                prev: baselink + `?page=${prev}`,
-                next: baselink + `?page=${next}`
+                prev: baselink + `job/?page=${prev}`,
+                next: baselink + `job/?page=${next}`
               },
-              result
+              data: result
             };
             res.json({ dataResult });
             const data = JSON.stringify(dataResult);
